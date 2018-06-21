@@ -2,6 +2,8 @@
 Adoption Agency
 ===============
 
+.. image:: screen.png
+
 In this exercise, you'll build a web application for a Pet adoption agency.
 
 Step 1: Create Database & Model
