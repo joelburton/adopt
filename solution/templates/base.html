@@ -1,0 +1,17 @@
+<html>
+  <head>
+    <link rel="stylesheet" href="/static/adopt.css">
+  </head>
+  <body>
+    <h1>Adopt</h1>
+
+    {% for msg in get_flashed_messages() %}
+      {{ msg }}
+    {% endfor %}
+
+    {% block content %}
+
+    {% endblock %}
+    
+  </body>
+</html>
