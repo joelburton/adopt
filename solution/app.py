@@ -2,7 +2,6 @@ from flask import Flask, url_for, render_template, redirect, flash
 from flask_sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_wtf import FlaskForm
-from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, IntegerField, RadioField, TextAreaField, BooleanField
 from wtforms.validators import InputRequired, Length, NumberRange, URL, Optional
 
@@ -16,7 +15,6 @@ app.config['SQLALCHEMY_ECHO'] = True
 
 db = SQLAlchemy(app)
 toolbar = DebugToolbarExtension(app)
-csrf = CSRFProtect(app)
 
 ##############################################################################
 
@@ -72,15 +70,7 @@ def list_pets():
     return render_template("pet_list.html", pets=pets)
 
 
-@app.route("/add")
-def show_add_pet_form():
-    """Show form to add a pet."""
-
-    form = AddPetForm()
-    return render_template("pet_add_form.html", form=form)
-
-
-@app.route("/add", methods=["POST"])
+@app.route("/add", methods=["GET", "POST"])
 def add_pet():
     """Add a pet."""
 
@@ -99,22 +89,12 @@ def add_pet():
         return render_template("pet_add_form.html", form=form)
 
 
-@app.route("/<int:pet_id>")
-def show_pet_edit_form(pet_id):
-    """Show edit form for pet."""
-
-    pet = Pet.query.get_or_404(pet_id)
-    form = EditPetForm(obj=pet)
-
-    return render_template("pet_edit_form.html", form=form, pet=pet)
-
-
-@app.route("/<int:pet_id>", methods=["POST"])
+@app.route("/<int:pet_id>", methods=["GET", "POST"])
 def edit_pet(pet_id):
     """Edit pet."""
 
     pet = Pet.query.get_or_404(pet_id)
-    form = EditPetForm()
+    form = EditPetForm(obj=pet)
 
     if form.validate_on_submit():
         pet.notes = form.data['notes']

@@ -7,13 +7,13 @@
 {% for pet in pets %}
 <li>
   {% if pet.photo_url %}<img src="{{ pet.photo_url }}">{% endif %}
-  <a href="{{ url_for('show_pet_edit_form', pet_id=pet.id) }}">{{ pet.name }}</a>
+  <a href="{{ url_for('edit_pet', pet_id=pet.id) }}">{{ pet.name }}</a>
   {% if pet.available %} <b>available!</b> {% endif %}
 </li>
 {% else %}
   No pets yet.
 {% endfor %}
 
-<a href="{{ url_for('show_add_pet_form') }}">Add a Pet</a>
+<a href="{{ url_for('add_pet') }}">Add a Pet</a>
 
 {% endblock %}
