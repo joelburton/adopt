@@ -5,6 +5,8 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, RadioField, TextAreaField, BooleanField
 from wtforms.validators import InputRequired, Length, NumberRange, URL, Optional
 
+GENERIC_IMAGE = "https://mylostpetalert.com/wp-content/themes/mlpa-child/images/nophoto.gif"
+
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = "abcdef"
@@ -31,6 +33,11 @@ class Pet(db.Model):
     age = db.Column(db.Integer)
     notes = db.Column(db.Text)
     available = db.Column(db.Boolean, nullable=False, default=True)
+
+    def image_url(self):
+        """Return image for pet -- bespoke or generic."""
+
+        return self.photo_url or GENERIC_IMAGE
 
 
 db.create_all()
